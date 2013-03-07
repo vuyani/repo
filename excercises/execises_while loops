@@ -1,0 +1,181 @@
+#3
+counter =1
+while counter <=(1, 100):
+	print "repeat"
+	counter = counter + 1 
+#4
+counter = 1
+while counter <= 10:
+     print counter,
+     counter = counter + 1 
+
+#5
+number=raw_input("please enter a number")
+counter = 1
+while counter <= int(number):
+     print counter,
+     counter = counter + 1
+
+#6
+number=raw_input("please enter a number")
+counter =1
+add=0
+while counter <= int(number):
+    add=add+counter    
+    counter = counter + 1 
+	
+print (add)
+
+#7
+number1=raw_input("please enter first number")
+number2=raw_input("please enter second number")
+counter =int(number1)
+counter2=int(number2)
+add=0
+if int(number1)<int(number2):
+	while counter <= int(number2):
+		add=add+counter    
+		counter = counter + 1 
+	print (add)
+elif int(number1)>int(number2):
+	while counter2 <= int(number1):
+		add=add+counter2   
+		counter2 = counter2 + 1
+	print (add)
+#8
+def lowerbase(base):
+	if base=="g" or base=="G":
+		print "g"
+	elif base=="a" or base=="A":
+		print "a"
+	elif base=="c" or base=="C":
+		print "c"
+	else:
+		print "t"
+
+counter=0
+seq=raw_input('enter sequence')
+while counter< len(seq):
+	lowerbase(seq[counter])
+	counter=counter+1
+#9
+status = 0
+add=0
+li=[]
+while status !="":
+     status = raw_input("enter individual number press enter when finished:")
+     if status !="":
+     	li=li+[status]
+     print li
+print min(li)
+
+#
+n1=a
+n2=b
+if n1 <n2
+print n1
+status=int(raw_input("enter no"))
+smallest=status
+while status !="":
+	if status < smallest
+	smallest=status
+	status=int(raw_input("enter no"))
+print smallest
+	
+status=int(raw_input("enter no"))
+
+#10
+status = 0
+add=0
+counter=0
+while status !="":
+     status = raw_input("enter individual number press enter when finished:")
+     if status !="":
+     	add=float(status)+float(add)
+     	counter=counter+1
+print add/counter
+#11
+name =raw_input('enter names')
+first_name=name
+last_name=name
+shortest=name
+longest=name
+while name !="":
+	name =raw_input('enter names')
+	if name>first_name:
+		first_name=name
+	print "the first name is"
+	print first_name
+	if name<last_name:
+		last_name=name
+	print "the last name is"
+	print last_name
+	if len(name)>len(shortest):
+		shortest=name
+	print "the shortest is"
+	print shortest 
+	if len(name)<len(longest):
+		longest=name
+	print "the shortest is"
+	print longest
+#12
+counter = 1
+while counter < 100:
+	print counter,
+	counter = counter + 1
+	if counter%10==0:
+		print counter
+		counter=counter + 1
+#13
+status = 0
+X="y"
+add=0
+counter=0
+while X =="y":
+	while status !="":
+	     status = raw_input("enter individual number press enter when finished:")
+	     if status !="":
+	     	add=float(status)+float(add)
+	     	counter=counter+1
+	print "the average is", int(add)/counter
+	X=raw_input("do you want to continue? ")
+	
+#14
+phrase1=raw_input("enter phrase 1")
+phrase2=raw_input("enter phrase 2")
+letter1=raw_input("enter letter ")
+counter1= 0
+counter2= 0
+occurance1=0
+occurance=0
+while counter1 < len(phrase1):
+	if letter1==phrase1[counter1]:
+		occurance=occurance+1
+		counter1=counter1+1
+print "number of c" occurance
+
+while counter2 < len(phrase2):
+	if letter1==phrase2[counter2]:
+		occurance1=occurance1+1
+		counter2=counter2+1
+print "number of characters in phrase 2", occurance1
+
+#15
+status=0
+X="y"
+add=0
+counter=0
+while X !="quit":
+	while status !="":
+	     status = raw_input("enter individual number press enter when finished:")
+	     if status !="":
+	     	add=float(status)+float(add)
+	     	counter=counter+1
+	X=raw_input("what do you want to do? sum, mean or quit ")
+	status=X
+	if X=="mean":
+		print "the average is", int(add)/counter
+	elif X=="sum":
+		print "the SUM is", int(add)
+	else:
+		print "good bye"

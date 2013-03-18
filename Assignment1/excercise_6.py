@@ -4,7 +4,7 @@ capital=raw_input("is this city a Capital? yes or no")
 income=raw_input("what is the income")
 
 if capital=="yes":
-	if int(population) > 100000:
+	if int(population) >= 100000:
 		print cityname, "is a metropoly"
 	elif int(population) < 100000:
 		print cityname, "is not a metropoly because population is less than 100000 "

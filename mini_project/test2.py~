@@ -1,0 +1,305 @@
+inputfile=["none"]
+main_menu=" "
+alpha=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+NUMBERS=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+pdbfile="none"
+titles=""
+chainlength=[]
+shtno=[]
+helno=[]
+
+ltrlist=[]
+x=""
+histlist=[]
+lines=[]
+NUMaa=0
+HEL=0
+SHT=0
+while main_menu!="Q":
+	print 80*'*',"\n",'*','PDB FILE ANALYZER',58*" ","*","\n",80*'*',"\n","*","Select an option from below:",47*" ","*","\n","*",76*" ","*","\n","*",3*" ","1) Open a PDB File",21*" ","(O)",27*" ","*","\n","*",3*" ","2) Information",25*" ","(I)",27*" ","*","\n","*",3*" ","3) Show histogram of amino acids",7*" ","(H)",27*" ","*","\n","*",3*" ","4) Display Secondary structure",9*" ","(S)",27*" ","*","\n","*",3*" ","5) Manipulate Helix or Sheet",11*" ","(M)",27*" ","*","\n","*",3*" ","6) Export PDB File",21*" ","(X)",27*" ","*","\n","*",3*" ","7) Exit",32*" ","(Q)",27*" ","*","\n""*",76*" ","*","\n",'*',58*" ",'Current PDB:',pdbfile,"*","\n", 80*'*'
+	main_menu=raw_input(": ")
+	
+	if main_menu=="O":
+		pdbfile=raw_input("Enter a Valid PATH for a PDB File: ")
+		import os.path
+		f=os.path.exists(pdbfile)
+		
+	
+		if f==True:
+			if pdbfile in inputfile:
+				print "the File", pdbfile, "is already loaded"					
+
+
+			else:
+
+				file1=open(pdbfile, 'r')
+				inputfile=inputfile[:]+[pdbfile]
+				print "The File", pdbfile, "has been successfully loaded"
+				lines=file1.readlines()
+
+				
+		else:
+			print "Error", pdbfile, "does not exist"
+
+
+	if main_menu=="I":
+		for i in lines:
+			if "TITLE" in i:
+				titles=titles+ str(i[10:]).rstrip('\n').rstrip()
+			
+			
+			if "SEQRES" in i:
+				for alph in alpha:
+					if i[11]==alph:
+
+							if int((i[8:10]).rstrip(""))==1:
+
+								NUMaa=i[13:18]
+								chainlength.append(NUMaa)
+
+							
+			if "HELIX" in i:
+				
+			
+				for alph in alpha:
+
+					if i[19]==alph:
+
+						HEL=0
+						for num in NUMBERS:
+							if int(i[9])==num:
+			
+								HEL=HEL+1
+			helno.append(HEL)
+			
+			
+			if "SHEET" in i:
+
+				for num in NUMBERS:
+					
+					if int(i[9])==num:
+						for alph in alpha:
+							
+							if i[21]==alph:
+
+								SHT=SHT+1
+			shtno.append(SHT)
+					
+			one_letter ={'VAL':'V', 'ILE':'I', 'LEU':'L', 'GLU':'E', 'GLN':'Q', \
+			'ASP':'D', 'ASN':'N', 'HIS':'H', 'TRP':'W', 'PHE':'F', 'TYR':'Y',    \
+			'ARG':'R', 'LYS':'K', 'SER':'S', 'THR':'T', 'MET':'M', 'ALA':'A',    \
+			'GLY':'G', 'PRO':'P', 'CYS':'C'}
+			
+			
+
+			if "SEQRES" in i:
+				if i[11]=="A":
+					aseq=i[19:70]
+					ltr=aseq.split(" ")
+					ltrlist=ltrlist+ltr
+		for a in ltrlist:
+			for b in one_letter:
+
+				if a==b:
+					x=x+one_letter[b]
+
+					
+
+
+	
+
+		print titles,shtno,helno,chainlength
+			
+
+	if main_menu=="H":
+		
+			histlist=[]
+			histoptions=raw_input("order by: ")
+			amino=["V","I","L","E","Q","D","N","H","W","F","Y","R","K","S","T","M","A","G","P","C"]
+			amin0=["Val","Ile","Leu","Glu","Gln","Asp","Asn","His","Trp","Phe","Tyr","Arg","Lys","Ser","Thr","Met","Ala","Gly","Pro","Cys"]
+			for aa in range(0,len(amino)):
+				numa=x.count(amino[aa])
+				histlist=histlist[:]+[(amin0[aa],numa)]
+			
+			if histoptions=="an":
+				histlist=sorted(histlist,key=lambda x:(x[1]))
+				for i in range(len(histlist)):
+					print histlist[i][0],'(',histlist[i][1],')',histlist[i][1]*"*"		
+			
+			if histoptions=="dn":
+				histlist=sorted(histlist,key=lambda x:(x[1]),reverse=True)
+				for i in range(len(histlist)):
+					print histlist[i][0],'(',histlist[i][1],')',histlist[i][1]*"*"		
+			
+
+			if histoptions=="aa":
+				histlist=sorted(histlist,key=lambda x:(x[0]))
+				for i in range(len(histlist)):
+					print histlist[i][0],'(',histlist[i][1],')',histlist[i][1]*"*"		
+			
+			if histoptions=="da":
+				histlist=sorted(histlist,key=lambda x:(x[0]),reverse=True)
+				
+				for i in range(len(histlist)):
+					print histlist[i][0],'(',histlist[i][1],')',histlist[i][1]*"*"		
+			
+
+
+	if main_menu=="S":
+		x="YNFFPRKPKWDKNQITYRIIGYTPDLDPETVDDAFARAFQVWSDVTPLRFSRIHDGEADIMINFGRWEHGDGYPFDGKDGLLAHAFAPGTGVGGDSHFDDDELWTLGKGVGYSLFLVAAHAFGHAMGLEHSQDPGALMAPIYTYTKNFRLSQDDIKGIQELYGASPD"
+		blanksec=len(x)*"-"
+		blankseclist=list(blanksec)
+		identifier=len(x)*' '
+		identifierlist=list(identifier)
+		file1=open(pdbfile, 'r')
+		
+		lines=file1.readlines()
+		
+		for line in lines:
+			if "HELIX" in line:
+				if line[19]=="A":
+					print "CHAIN a"
+					if line[9]=="1":
+						for a in range(int(line[22:25]),int(line[34:38])+1):
+						
+
+							blankseclist[a-1]='/'
+							identifierlist[int(line[22:25])]="1"
+						
+					if line[9]=="2":
+						for a in range(int(line[22:25]),int(line[34:38])+1):
+							
+
+							blankseclist[a-1]='/'
+							identifierlist[int(line[22:25])]="2"
+						
+
+					if line[9]=="3":
+						for a in range(int(line[22:25]),int(line[34:38])+1):
+							
+							blankseclist[a-1]='/'
+							identifierlist[int(line[22:25])]="3"
+
+
+
+
+		for line in lines:
+			if "SHEET" in line:
+				if line[32]=="A":
+					print "CHAIN b"
+					if line[9]=="1":
+						if line[13]=="A":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="1"
+							identifierlist[int(line[23:26])+1]="A"
+					if line[9]=="2":
+						if line[13]=="A":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="2"
+							identifierlist[int(line[23:26])+1]="A"
+
+					if line[9]=="1":
+						if line[13]=="B":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="1"
+							identifierlist[int(line[23:26])+1]="B"
+
+
+					if line[9]=="2":
+						if line[13]=="B":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="2"
+							identifierlist[int(line[23:26])+1]="B"
+
+
+
+					if line[9]=="3":
+						if line[13]=="B":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="3"
+							identifierlist[int(line[23:26])+1]="B"
+
+					if line[9]=="4":
+						if line[13]=="B":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="4"
+							identifierlist[int(line[23:26])+1]="B"
+
+					if line[9]=="5":
+						if line[13]=="B":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="5"
+							identifierlist[int(line[23:26])+1]="B"
+
+					if line[9]=="6":
+						if line[13]=="B":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="6"
+							identifierlist[int(line[23:26])+1]="B"
+
+
+					if line[9]=="1":
+						if line[13]=="C":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="1"
+							identifierlist[int(line[23:26])+1]="C"
+
+					if line[9]=="2":
+						if line[13]=="C":
+							for a in range(int(line[23:26]),int(line[34:37])+1):
+						
+
+								blankseclist[a-1]='|'
+							identifierlist[int(line[23:26])]="2"
+							identifierlist[int(line[23:26])+1]="C"
+
+
+		blanksec="".join(blankseclist)
+		identifier="".join(identifierlist)
+		a=0
+		print len(identifier)
+		for i in range(len(x)):
+				
+				if i%80==0:
+					print x[a:i],"\b","\n",blanksec[a:i],"\b","\n",identifier[a+1:i]
+					a=i
+		print x[a:],"\b","\n",blanksec[a:],"\b","\n",identifier[a+1:]
+		
+		
+		
+	
+
+
+
+
+
+
+				
+				

@@ -1,0 +1,339 @@
+file1=open('3AYU.pdb', 'r')
+lines=file1.readlines()
+options="E"
+main_menu="M"
+new_line='HELIX    1   1 ASP A   27  ASP A   44  1                                  18    \n'
+new_sheet='SHEET    2   A 2 LEU A 128  GLU A 129 \n'
+
+aminot={"V":"Val","I":"Ile","L":"Leu","E":"Glu","Q":"Gln","D":"Asp","N":"Asn","H":"His","W":"Trp","F":"Phe","Y":"Tyr","R":"Arg","K":"Lys","S":"Ser","T":"Thr","M":"Met","A":"Ala","G":"Gly","P":"Pro","C":"Cys"}
+helix_class = {1:'Right-handed alpha (default)', 2:'Right-handed omega', 3:'Right-handed pi', 4:'Right-handed gamma', 5:'Right-handed 3 - 10', 6:'Left-handed alpha', 7:'Left-handed omega', 8:'Left-handed gamma', 9:'2 - 7 ribbon/helix', 10:'Polyproline'}
+CL=["A","B"]
+tps=
+if main_menu=="M":
+	while options!= "M":
+		print "Choose one of the Manipulation Options:","\n","List(L)   Edit(E)   New(N)   Remove(R)   Main Menu(M)"
+		options=raw_input(": ")
+		if options=="L":
+			helixorsheet=raw_input("Do you want to list the Helix (H) or the Sheet (S): ")
+			a=0
+			for i in lines:
+				if "HELIX" in i:
+						
+					a=a+1
+			if helixorsheet=="H":
+				Q=1
+
+				for line in lines:
+					if "HELIX" in line:
+						
+						strip=line[8:10]
+						strip=strip.strip(" ")
+						if int(strip)==Q:
+							serNum=line[7:10]
+							helixID=line[11:14]
+							initResName=line[15:18]
+							initChainID=line[19]
+							initSeqNum=line[21:25]
+							initICode=line[25]
+							endResName=line[27:30]
+							endChainID=line[31]
+							endSeqNum=line[33:37]
+							endICode=line[37]
+							helixClass=int(line[38:40])
+							if helixClass==1:
+								helixClass="Right-handed alpha"
+							if helixClass==2:
+								helixClass="Right-handed omega"
+							if helixClass==3:
+								helixClass="Right-handed pi"
+							if helixClass==4:
+								helixClass="Right-handed gamma"
+							if helixClass==5:
+								helixClass="Right-handed 3-10"
+							if helixClass==6:
+								helixClass="Left-handed alpha"
+							if helixClass==7:
+								helixClass="Left-handed omega"
+							if helixClass==8:
+								helixClass="Right-handed gamma"
+							if helixClass==9:
+								helixClass="2 - 7 ribbon/helix"
+							if helixClass==1:
+								helixClass="Polyproline"
+							comment=line[40:70]
+							length=line[71:76]
+						
+
+							print "Helix",Q,"of",a,":","\n"," serNum:",serNum,"\n"," helixID:",helixID,"\n"," initResName:",initResName,"\n"," initChainID:",initChainID,"\n"," initSeqNum:",initSeqNum,"\n"," initICode:",initICode,"\n"," endResName:",endResName,"\n"," endChainID:",endChainID,"\n"," endSeqNum: ",endSeqNum,"\n"," endICode:",endICode,"\n"," helixClass:",helixClass,"\n"," comment: ",comment,"\n"," length:",length
+							Q=Q+1
+
+			if helixorsheet=="S":
+			
+						Q=1
+						for line in lines:
+
+							if "SHEET" in line:
+								strip=line[7:10]
+								strip=strip.strip(" ")
+					
+								if int(strip)==Q:
+									print "W" 
+									strand=line[7:10]
+									sheetID=line[11:14]
+									numStrands=line[14:16]
+									initResName=line[17:20]
+									initChainID=line[21]
+									initSeqNum=line[22:26]
+									initICode=line[27]
+									endResName=line[27:31]
+									endChainID=line[32]
+									endSeqNum=line[33:37]
+									endICode=line[37]
+									sense=line[38:40]
+									curAtom=line[45:48]
+									curResName=line[33:37]
+									curChainId=line[49]
+									curResSeq=line[50:54]
+									curICode=line[55]
+									prevAtom=line[56:60]
+									prevResName=line[60:63]
+									prevChainId=line[64]
+									prevResSeq=line[65:69]
+									prevICode=line[69]
+									a=0
+									for i in lines:
+										if "SHEET" in i:
+						
+											a=a+1
+						
+
+									print "Helix",Q,"of",a,"\n"," strand:",strand,"\n"," sheetID:",sheetID,"\n"," numStrands:",numStrands,"\n"," initResName:",initResName,"\n"," initChainID:",initChainID,"\n"," initSeqNum:",initSeqNum,"\n"," initICode:",initICode,"\n"," endResName:",endResName,"\n"," endChainID:",endChainID,"\n"," endSeqNum:",endSeqNum,"\n"," endICode:",endICode,"\n"," sense:",sense,"\n"," curAtom:",curAtom,"\n"," curResName:",curResName,"\n"," curChainId:",curChainId,"\n"," curResSeq:",curResSeq,"\n"," curICode:",curICode,"\n"," prevAtom:",prevAtom,"\n"," prevResName",prevResName,"\n"," prevChainId",prevChainId,"\n"," prevResSeq",prevResSeq,"\n"," prevICode",prevICode
+									Q=Q+1
+
+		if options=="E":
+			helixorsheet2=raw_input("Do you want to edit a Helix (H) or the Sheet (S): ")
+			if helixorsheet2=="H":
+					hel=0
+					for line in lines:
+						if "HELIX" in line:
+							hel=hel+1
+					edit_options=raw_input("Which Helix do you want to edit (1-"+ str(hel)+"):")
+					for line in lines:
+						if "HELIX" in line:
+							strip=line[8:10]
+							strip=strip.strip(" ")
+							if int(strip)==int(edit_options):
+									if "HELIX" in line:
+										print line
+										initChainID=line[19]
+										initSeqNum=line[21:25]
+										endSeqNum=line[33:37]
+										helixClass=int(line[38:40])
+										comment=line[40:70]
+										
+							
+										chain=raw_input(" Chain ["+str(initChainID)+"]:")
+										for w in range(len(CL)):
+											if chain==CL[w]:
+												line=line[:19]+chain+line[20:]
+												line=line[:31]+chain+line[31:]
+												initSeq=raw_input(" initSeqNum ["+str(initSeqNum)+"]")
+												line=line[:15]+"%3s"%(aminot[tps[w][int(initSeq)]])+line[18:]
+												print "That position correspond to the amino acid", aminot[tps[w][int(initSeq)]]
+												line=line[:22]+"%3s"%(initSeq)+line[25:]
+												endSeq=raw_input(" endSeqNum ["+str(endSeqNum)+"]")
+												a=aminot[tps[w][int(endSeqNum)]]
+												b= "%3s"%(a,)
+												line=line[:27]+b+line[30:]
+												print "That position correspond to the amino acid", aminot[tps[w][int(endSeqNum)]]
+												line=line[:34]+"%3s"%(endSeq)+line[37:]
+												hclass=raw_input(" helixClass ["+str(helixClass)+"]")
+												print "The selected class was:", helix_class[int(hclass)]
+
+												line=line[:39]+hclass+line[40:70]
+												com=raw_input(" comment:")
+												line=line[:40]+"%31s"%com+line[40:70]
+										print line
+										print "The Helix"+str(edit_options)+"has been successfully edited."
+
+			if helixorsheet2=="S":
+					sht=0
+					for line in lines:
+						if "SHEET" in line:
+							sht=sht+1
+					edit_options=raw_input("Which sheet do you want to edit (1-"+ str(sht)+"):")
+					for line in lines:
+						if "SHEET" in line:
+							strip=line[8:10]
+							strip=strip.strip(" ")
+							if int(strip)==int(edit_options):
+									if "SHEET" in line:
+										print line
+										initChainID=line[21]
+										initSeqNum=line[22:26]
+										endSeqNum=line[33:37]
+									
+							
+										sheet=raw_input(" Sheet ["+str(initChainID)+"]:")
+										for w in range(len(CL)):
+											if sheet==CL[w]:
+
+												line=line[:21]+sheet+line[22:]
+												line=line[:32]+sheet+line[33:]
+												initSeq=raw_input(" initSeqNum ["+str(initSeqNum)+"]")
+												line=line[:17]+"%3s"%(aminot[tps[w][int(initSeq)]])+line[20:]
+												print "That position correspond to the amino acid", aminot[tps[w][int(initSeq)]]
+												line=line[:23]+"%3i"%(int(initSeq))+line[26:]
+												endSeq=raw_input(" endSeqNum ["+str(endSeqNum)+"]")
+												print "That position correspond to the amino acid", aminot[tps[w][int(endSeqNum)]]
+												line=line[:28]+"%3s"%(aminot[tps[w][int(endSeqNum)]])+line[31:]
+												line=line[:34]+"%3i"%int(endSeq)+line[37:]
+										print line
+										print "The Helix"+str(edit_options)+"has been successfully edited."
+
+
+
+		if options=="N":
+			helixorsheet2=raw_input("Do you want to Add a Helix (H) or the Sheet (S): ")
+
+
+			if helixorsheet2=="H":
+					chain=raw_input(" Chain :")
+					for w in range(len(CL)):
+						if chain==CL[w]:
+							new_line=new_line[:19]+chain+new_line[20:]
+							new_line=new_line[:31]+chain+new_line[31:]
+							initSeq=raw_input(" initSeqNum")
+							new_line=new_line[:15]+"%3s"%(aminot[tps[w][int(initSeq)]])+line[18:]
+							print "That position correspond to the amino acid", aminot[tps[w][int(initSeq)]]
+							new_line=new_line[:22]+"%3s"%(initSeq)+new_line[25:]
+							endSeq=raw_input(" endSeqNum")
+							a=aminot[tps[w][int(endSeqNum)]]
+							b= "%3s"%(a,)
+							new_line=new_line[:27]+b+new_line[30:]
+							print "That position correspond to the amino acid", aminot[tps[w][int(endSeqNum)]]
+							new_line=new_line[:34]+"%3s"%(endSeq)+new_line[37:]
+							hclass=raw_input(" helixClass")
+							print "The selected class was:", helix_class[int(hclass)]
+
+							new_line=new_line[:39]+hclass+new_line[40:70]
+							com=raw_input(" comment:")
+							new_line=new_line[:40]+"%31s"%com+new_line[40:70]
+
+					helix=0
+
+					lc=0
+					for line in lines:
+						for index in range(len(lines)):
+							if "HELIX"== line[0:6]:
+								lc=index
+						new_line=new_line[:7]+"%3s"%lc+new_line[9:]
+						new_line=new_line[:11]+"%3s"%lc+new_line[13:]
+						lines.insert(lc,new_line)
+					for line in lines:
+						if "HELIX"== line[0:6]:
+							helix=helix+1
+				
+					print "The Helix"+str(helix) +"has been successfully created."
+					print new_line
+
+
+
+			if helixorsheet2=="S":
+
+				sheet=raw_input(" Sheet :")
+				for w in range(len(CL)):
+					if sheet==CL[w]:
+						new_sheet=new_sheet[:20]+sheet+line[21:]
+						initSeq=raw_input(" initSeqNum ")
+						print "That position correspond to the amino acid", aminot[tps[w][int(initSeq)]]
+						new_sheet=new_sheet[:22]+initSeq+line[26:]
+						endSeq=raw_input(" endSeqNum ")
+						print "That position correspond to the amino acid", aminot[tps[w][int(endSeqNum)]]
+
+						new_sheet=new_sheet[:33]+endSeq+line[37:]
+				print new_sheet
+			
+			
+				lc=0
+				sheet=0
+				for line in lines:
+					for index in range(len(lines)):
+						if "SHEET"== line[0:6]:
+							lc=index
+					lines.insert(lc,new_sheet)
+				for line in lines:
+					if "HELIX"== line[0:6]:
+						sheet=sheet+1
+				
+			
+				print "The sheet"+str(sheet)+" has been successfully created."
+
+		if options=="R":
+			helixorsheet3=raw_input("Do you want to remove a Helix (H) or the Sheet (S): ")
+
+			if helixorsheet3=="H":
+				hel1=0
+				for line in lines:
+						if "HELIX" in line:
+							hel1=hel1+1
+
+				edit_options=raw_input("Which Helix do you want to edit (1-"+ str(hel1)+"):")
+				sure=""
+				for line in lines:
+					if "HELIX" in line:
+						strip=line[8:10]
+						strip=strip.strip(" ")
+						if int(strip)==int(edit_options):
+							sure=raw_input("Are you sure you want to delete the helix?"+"\n"+str(line)+"Y/N")
+				
+				if sure=="Y":
+					for line in lines:
+						if "HELIX" in line:
+							strip=line[8:10]
+							strip=strip.strip(" ")
+							if int(strip)==int(edit_options):
+								line=line[:]+ "\b"
+								print "The helix "+ str(edit_options)+" has been successfully removed"
+
+			if helixorsheet3=="S":
+				SHT=0
+				for line in lines:
+						if "SHEET" in line:
+							SHT=SHT+1
+
+				edit_options=raw_input("Which Helix do you want to edit (1-"+ str(SHT)+"):")
+				sure=""
+				for line in lines:
+					if "SHEET" in line:
+						strip=line[8:10]
+						strip=strip.strip(" ")
+						if int(strip)==int(edit_options):
+							sure=raw_input("Are you sure you want to delete the helix?"+"\n"+str(line)+"Y/N? ")
+				
+				if sure=="Y":
+					for line in lines:
+						if "SHEET" in line:
+							strip=line[8:10]
+							strip=strip.strip(" ")
+							if int(strip)==int(edit_options):
+								line="\b"
+								print "The helix "+ str(edit_options)+" has been successfully removed"
+
+
+
+if main_menu=="X":
+		import os
+		expfpath=""
+		while expfpath=="":
+			expfpath=raw_input("File path")
+			if expfpath !="":
+				with open(expfpath,"w") as f:
+					f.write("".join(lines))
+					print "File SAVED."
+			options=raw_input("Press [enter] to go back to the main menu")
+			if options=="":
+				options="M"
+
+
+	

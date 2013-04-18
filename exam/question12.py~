@@ -1,0 +1,12 @@
+x=raw_input("Enter a number: ")
+w=0
+li=[]
+for i in range(1,int(x)):
+	w=0
+	if i%2==0:
+		w=i+2
+		li.append(w)
+	if i%2!=0:
+		w=i+3
+		li.append(w)
+print li
